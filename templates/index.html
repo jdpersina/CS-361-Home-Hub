@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Persina Home</title>
+</head>
+<body>
+
+  <main id="app">
+    {% include "views/home.html" %}
+    {% include "views/calendar.html" %}
+  </main>
+
+  {% include "dialogs/add_event.html" %}
+  {% include "dialogs/delete_event.html" %}
+
+</body>
+</html>

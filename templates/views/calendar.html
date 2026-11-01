@@ -1,0 +1,40 @@
+<section id="view-calendar" aria-labelledby="calendar-title" hidden>
+
+  <header id="calendar-header">
+    <div id="calendar-logo" aria-hidden="true"></div>
+    <p id="calendar-brand">THE PERSINA HOME</p>
+    <h1 id="calendar-title">Family calendar</h1>
+    <p id="calendar-header-date"></p>
+  </header>
+
+  <div id="month-panel">
+    <div id="month-header">
+      <h2 id="month-title"></h2>
+      <button type="button" id="btn-today">Today</button>
+      <button type="button" id="btn-prev-month" aria-label="Previous month">&lsaquo;</button>
+      <button type="button" id="btn-next-month" aria-label="Next month">&rsaquo;</button>
+    </div>
+    <div id="weekday-row">
+      <span>Sun</span>
+      <span>Mon</span>
+      <span>Tue</span>
+      <span>Wed</span>
+      <span>Thu</span>
+      <span>Fri</span>
+      <span>Sat</span>
+    </div>
+    <div id="month-grid"></div>
+  </div>
+
+  <div id="day-panel">
+    <h2 id="selected-date"></h2>
+    <ul id="day-events"></ul>
+  </div>
+
+  <div id="calendar-actions">
+    <button type="button" id="btn-add-event">Add event</button>
+    <button type="button" id="btn-delete-event">Delete event</button>
+    <button type="button" id="btn-back-home">Back to home</button>
+  </div>
+
+</section>
