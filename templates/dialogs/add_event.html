@@ -1,0 +1,31 @@
+<dialog id="dlg-add" aria-labelledby="dlg-add-title">
+  <form id="form-add">
+    <h2 id="dlg-add-title">Add event</h2>
+
+    <label for="add-title">Event title</label>
+    <input type="text" id="add-title" name="title" required>
+
+    <label for="add-date">Date</label>
+    <input type="date" id="add-date" name="date" required>
+
+    <label for="add-start">Start time</label>
+    <input type="time" id="add-start" name="startTime" required>
+
+    <label for="add-end">End time</label>
+    <input type="time" id="add-end" name="endTime" required>
+
+    <label for="add-participants">Family member</label>
+    <select id="add-participants" name="participants" multiple required></select>
+
+    <label for="add-location">Location</label>
+    <input type="text" id="add-location" name="location">
+
+    <label for="add-description">Notes <span>Optional</span></label>
+    <textarea id="add-description" name="description"></textarea>
+
+    <div id="dlg-add-actions">
+      <button type="button" id="btn-add-cancel">Cancel</button>
+      <button type="submit" id="btn-add-save">Save event</button>
+    </div>
+  </form>
+</dialog>
