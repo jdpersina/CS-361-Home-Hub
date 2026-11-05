@@ -1,0 +1,42 @@
+:root {
+    --bg:        #0b1220;  /* page */
+    --card:      #0f1b33;  /* card surfaces */
+    --accent:    #1e3a8a;  /* date card, primary buttons */
+    --border:    #22345c;
+    --text:      #f5f1e8;  /* warm off-white headings */
+    --muted:     #8fb3ff;  /* sub-labels, links */
+    --radius:    28px;
+  
+    /* family member colors */
+    --dan:   #60a5fa;
+    --jamie: #2dd4bf;
+    --leo:   #f59e0b;
+    --mia:   #f472b6;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 40px;
+  }
+  #view-home {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  } 
+  #home-header {
+    grid-column: 1 / -1;
+  }
+  #calendar-card, #date-card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+  }
+  #calendar-card {
+    grid-column: 1 / 2;
+  }
+  #date-card {
+    grid-column: 2 / 3;
+    background-color: var(--accent);
+  }
