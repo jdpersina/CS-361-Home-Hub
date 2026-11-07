@@ -13,6 +13,9 @@
     --leo:   #f59e0b;
     --mia:   #f472b6;
   }
+  [hidden] {
+    display: none !important;
+  }
   body {
     background-color: var(--bg);
     color: var(--text);
@@ -39,4 +42,21 @@
   #date-card {
     grid-column: 2 / 3;
     background-color: var(--accent);
+    
+    #date-month-year {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    #date-weekday {
+        font-size: 40px;
+        font-weight: 400;
+        margin-bottom: 8px;
+    }
+    #date-day {
+        font-size: 40px;
+        font-weight: 400;
+        margin-bottom: 8px;
+    }
+
   }
