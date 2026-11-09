@@ -4,7 +4,12 @@
     "uid": "90b87587-46af-4504-a1fa-67adbd8d51b6",
     "updated": "2026-10-20T14:00:00Z",
     "title": "Pumpkin carving",
-    "participants": ["Dan", "Jamie", "Leo", "Mia"],
+    "participants": [
+      "Dan",
+      "Liv",
+      "Leo",
+      "Mia"
+    ],
     "description": "",
     "start": "2026-10-30T18:00:00",
     "timeZone": "America/New_York",
@@ -18,7 +23,9 @@
     "uid": "4cc61ff5-a94a-4e83-bbdf-dcae1de64fe4",
     "updated": "2026-11-01T12:00:00Z",
     "title": "Piano lesson",
-    "participants": ["Mia"],
+    "participants": [
+      "Mia"
+    ],
     "description": "",
     "start": "2026-11-03T16:15:00",
     "timeZone": "America/New_York",
@@ -32,7 +39,9 @@
     "uid": "2799d52f-c42f-4ddf-930b-589e2fe1a789",
     "updated": "2026-11-01T12:00:00Z",
     "title": "Soccer practice",
-    "participants": ["Leo"],
+    "participants": [
+      "Leo"
+    ],
     "description": "Bring shin guards.",
     "start": "2026-11-04T15:30:00",
     "timeZone": "America/New_York",
@@ -46,7 +55,9 @@
     "uid": "28e44dbc-3354-40b4-9c4d-ab6768bdd3db",
     "updated": "2026-11-02T09:30:00Z",
     "title": "Dentist",
-    "participants": ["Jamie"],
+    "participants": [
+      "Liv"
+    ],
     "description": "",
     "start": "2026-11-05T10:00:00",
     "timeZone": "America/New_York",
@@ -60,7 +71,9 @@
     "uid": "b82b92c3-6f90-4734-9422-3a0ffe0b4758",
     "updated": "2026-11-02T09:30:00Z",
     "title": "Soccer game",
-    "participants": ["Leo"],
+    "participants": [
+      "Leo"
+    ],
     "description": "",
     "start": "2026-11-07T09:00:00",
     "timeZone": "America/New_York",
@@ -71,24 +84,15 @@
   },
   {
     "@type": "calendarEvent",
-    "uid": "c415329a-95b8-4e34-be4e-2e8a6e17875f",
-    "updated": "2026-11-02T09:30:00Z",
-    "title": "Farmers market",
-    "participants": ["Dan", "Mia"],
-    "description": "",
-    "start": "2026-11-07T11:00:00",
-    "timeZone": "America/New_York",
-    "durationMinutes": 60,
-    "location": "Town Square",
-    "status": "confirmed",
-    "deletedAt": null
-  },
-  {
-    "@type": "calendarEvent",
     "uid": "44f4cffd-6c24-44c3-807f-700c04c09282",
     "updated": "2026-11-02T09:30:00Z",
     "title": "Dinner with Grandma",
-    "participants": ["Dan", "Jamie", "Leo", "Mia"],
+    "participants": [
+      "Dan",
+      "Liv",
+      "Leo",
+      "Mia"
+    ],
     "description": "",
     "start": "2026-11-07T18:00:00",
     "timeZone": "America/New_York",
@@ -99,24 +103,12 @@
   },
   {
     "@type": "calendarEvent",
-    "uid": "993ed916-3dad-4fbd-99a7-846fac5af24f",
-    "updated": "2026-11-03T08:00:00Z",
-    "title": "Movie night",
-    "participants": ["Dan", "Jamie", "Leo", "Mia"],
-    "description": "This one was cancelled; it stays in the file but is hidden.",
-    "start": "2026-11-07T20:30:00",
-    "timeZone": "America/New_York",
-    "durationMinutes": 120,
-    "location": "At home",
-    "status": "confirmed",
-    "deletedAt": "2026-11-06T22:00:00Z"
-  },
-  {
-    "@type": "calendarEvent",
     "uid": "553fa9a8-bd00-4355-a904-a36c8610f4b2",
     "updated": "2026-11-01T12:00:00Z",
     "title": "Piano lesson",
-    "participants": ["Mia"],
+    "participants": [
+      "Mia"
+    ],
     "description": "",
     "start": "2026-11-10T16:15:00",
     "timeZone": "America/New_York",
@@ -130,7 +122,9 @@
     "uid": "690bffd5-fb55-4aab-8e60-245574ffe20d",
     "updated": "2026-11-01T12:00:00Z",
     "title": "Soccer practice",
-    "participants": ["Leo"],
+    "participants": [
+      "Leo"
+    ],
     "description": "",
     "start": "2026-11-11T15:30:00",
     "timeZone": "America/New_York",
@@ -141,24 +135,13 @@
   },
   {
     "@type": "calendarEvent",
-    "uid": "9513a860-3870-4d24-9b84-333674a76c64",
-    "updated": "2026-11-01T12:00:00Z",
-    "title": "Parent-teacher conference",
-    "participants": ["Dan", "Jamie"],
-    "description": "",
-    "start": "2026-11-12T17:00:00",
-    "timeZone": "America/New_York",
-    "durationMinutes": 30,
-    "location": "Lincoln Elementary",
-    "status": "tentative",
-    "deletedAt": null
-  },
-  {
-    "@type": "calendarEvent",
     "uid": "5aa97f78-4e8f-4659-9d4d-d7a200e8b5dc",
     "updated": "2026-11-01T12:00:00Z",
     "title": "Library visit",
-    "participants": ["Jamie", "Mia"],
+    "participants": [
+      "Liv",
+      "Mia"
+    ],
     "description": "",
     "start": "2026-11-14T10:30:00",
     "timeZone": "America/New_York",
@@ -172,7 +155,12 @@
     "uid": "887e57f7-b629-45bc-9a70-48f611404647",
     "updated": "2026-11-01T12:00:00Z",
     "title": "Thanksgiving dinner",
-    "participants": ["Dan", "Jamie", "Leo", "Mia"],
+    "participants": [
+      "Dan",
+      "Liv",
+      "Leo",
+      "Mia"
+    ],
     "description": "",
     "start": "2026-11-26T15:00:00",
     "timeZone": "America/New_York",
@@ -183,15 +171,33 @@
   },
   {
     "@type": "calendarEvent",
-    "uid": "742adc4c-bb57-43ab-a395-407c6d627a06",
-    "updated": "2026-11-01T12:00:00Z",
-    "title": "Winter concert",
-    "participants": ["Mia"],
+    "uid": "957b282f-9738-4e41-9ca7-52db783ca745",
+    "updated": "2026-11-09T21:34:13Z",
+    "title": "Lazy Monday",
+    "participants": [
+      "Dan"
+    ],
     "description": "",
-    "start": "2026-12-03T18:30:00",
+    "start": "2026-11-09T00:00:00",
     "timeZone": "America/New_York",
-    "durationMinutes": 90,
-    "location": "Lincoln Elementary",
+    "durationMinutes": 720,
+    "location": "At Home",
+    "status": "confirmed",
+    "deletedAt": null
+  },
+  {
+    "@type": "calendarEvent",
+    "uid": "fd870327-86b2-441e-8a0a-33cedb734f0d",
+    "updated": "2026-11-09T21:47:03Z",
+    "title": "Farmer's Market",
+    "participants": [
+      "Liv"
+    ],
+    "description": "",
+    "start": "2026-11-09T17:00:00",
+    "timeZone": "America/New_York",
+    "durationMinutes": 60,
+    "location": "Downtown",
     "status": "confirmed",
     "deletedAt": null
   }

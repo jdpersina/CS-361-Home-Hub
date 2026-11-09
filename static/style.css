@@ -9,7 +9,7 @@
   
     /* family member colors */
     --dan:   #60a5fa;
-    --jamie: #2dd4bf;
+    --liv: #2dd4bf;
     --leo:   #f59e0b;
     --mia:   #f472b6;
   }
@@ -212,7 +212,7 @@
     color: var(--muted);
   }
   .member-dan   { --chip: var(--dan); }
-  .member-jamie { --chip: var(--jamie); }
+  .member-liv { --chip: var(--liv); }
   .member-leo   { --chip: var(--leo); }
   .member-mia   { --chip: var(--mia); }
 
@@ -227,12 +227,24 @@
     flex-direction: column;
     gap: 16px;
   }
-  .day-event {
+  #view-calendar .day-event {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding-left: 12px;
+    width: 100%;
+    padding: 8px 12px;
+    text-align: left;
+    border: none;
     border-left: 4px solid var(--chip, var(--muted));
+    border-radius: 0 12px 12px 0;
+    background-color: transparent;
+  }
+  #view-calendar .day-event[aria-pressed="true"] {
+    background-color: var(--border);
+  }
+  #view-calendar button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
   .day-event-time, .day-event-location, .day-event-participants, .day-empty {
     font-size: 14px;
@@ -240,6 +252,114 @@
   }
   .day-event-title {
     font-weight: 600;
+  }
+
+  /* Dialogs */
+  dialog {
+    width: min(600px, calc(100vw - 48px));
+    padding: 28px;
+    color: var(--text);
+    color-scheme: dark;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  dialog::backdrop {
+    background-color: rgb(5 9 18 / 0.7);
+  }
+  dialog h2 {
+    margin: 0 0 20px;
+  }
+  #form-add {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 16px;
+  }
+  #form-add h2 {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field-full  { grid-column: span 6; }
+  .field-half  { grid-column: span 3; }
+  .field-third { grid-column: span 2; }
+  .field label {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .optional {
+    font-size: 12px;
+    opacity: 0.7;
+  }
+  .field input, .field select, .field textarea {
+    font: inherit;
+    color: var(--text);
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+  .field textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  .dialog-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  dialog button, #toast button {
+    font: inherit;
+    color: var(--text);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+  dialog #btn-add-save {
+    background-color: var(--accent);
+  }
+  dialog #btn-delete-confirm {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+  }
+  #delete-event-card {
+    margin-bottom: 20px;
+    padding-left: 12px;
+    border-left: 4px solid var(--chip, var(--muted));
+  }
+  #delete-event-card h3 {
+    margin: 0 0 4px;
+  }
+  #delete-event-card p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* Undo toast, above the calendar layer */
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 10px 10px 20px;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 12px 32px rgb(0 0 0 / 0.4);
   }
 
   @media (max-width: 900px) {

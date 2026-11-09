@@ -2,28 +2,46 @@
   <form id="form-add">
     <h2 id="dlg-add-title">Add event</h2>
 
-    <label for="add-title">Event title</label>
-    <input type="text" id="add-title" name="title" required>
+    <div class="field field-full">
+      <label for="add-title">Event title</label>
+      <input type="text" id="add-title" name="title" required>
+    </div>
 
-    <label for="add-date">Date</label>
-    <input type="date" id="add-date" name="date" required>
+    <div class="field field-third">
+      <label for="add-date">Date</label>
+      <input type="date" id="add-date" name="date" required>
+    </div>
 
-    <label for="add-start">Start time</label>
-    <input type="time" id="add-start" name="startTime" required>
+    <div class="field field-third">
+      <label for="add-start">Start time</label>
+      <input type="time" id="add-start" name="startTime" required>
+    </div>
 
-    <label for="add-end">End time</label>
-    <input type="time" id="add-end" name="endTime" required>
+    <div class="field field-third">
+      <label for="add-end">End time</label>
+      <input type="time" id="add-end" name="endTime" required>
+    </div>
 
-    <label for="add-participants">Family member</label>
-    <select id="add-participants" name="participants" multiple required></select>
+    <div class="field field-half">
+      <label for="add-participants">Family member</label>
+      <select id="add-participants" name="participants" multiple required>
+        {% for member in family %}
+        <option value="{{ member }}">{{ member }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-    <label for="add-location">Location</label>
-    <input type="text" id="add-location" name="location">
+    <div class="field field-half">
+      <label for="add-location">Location</label>
+      <input type="text" id="add-location" name="location">
+    </div>
 
-    <label for="add-description">Notes <span>Optional</span></label>
-    <textarea id="add-description" name="description"></textarea>
+    <div class="field field-full">
+      <label for="add-description">Notes <span class="optional">Optional</span></label>
+      <textarea id="add-description" name="description"></textarea>
+    </div>
 
-    <div id="dlg-add-actions">
+    <div id="dlg-add-actions" class="dialog-actions">
       <button type="button" id="btn-add-cancel">Cancel</button>
       <button type="submit" id="btn-add-save">Save event</button>
     </div>
