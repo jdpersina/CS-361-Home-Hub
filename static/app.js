@@ -61,26 +61,32 @@ function selectedEvent() {
 }
 
 // Events API
+// Error responses come back as { error: "..." }, which is thrown so the caller can show it.
+async function request(url, options) {
+  const response = await fetch(url, options);
+  const body = await response.json();
+  if (!response.ok) throw new Error(body.error);
+  return body;
+}
+
 async function loadEvents() {
-  const response = await fetch('/api/events');
-  return await response.json();
+  return await request('/api/events');
 }
 
 async function createEvent(fields) {
-  const response = await fetch('/api/events', {
+  return await request('/api/events', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(fields),
   });
-  return await response.json();
 }
 
 async function deleteEvent(uid) {
-  await fetch(`/api/events/${uid}`, { method: 'DELETE' });
+  await request(`/api/events/${uid}`, { method: 'DELETE' });
 }
 
 async function restoreEvent(uid) {
-  await fetch(`/api/events/${uid}/restore`, { method: 'POST' });
+  await request(`/api/events/${uid}/restore`, { method: 'POST' });
 }
 
 async function refresh() {
@@ -326,18 +332,22 @@ addForm.addEventListener('submit', async event => {
   const saveButton = document.getElementById('btn-add-save');
   saveButton.disabled = true;
 
-  const created = await createEvent({
-    title: data.get('title'),
-    date: data.get('date'),
-    startTime: data.get('startTime'),
-    endTime: data.get('endTime'),
-    participants: data.getAll('participants'),
-    location: data.get('location'),
-    description: data.get('description'),
-  });
+  let created;
+  try {
+    created = await createEvent({
+      title: data.get('title'),
+      date: data.get('date'),
+      startTime: data.get('startTime'),
+      endTime: data.get('endTime'),
+      participants: data.getAll('participants'),
+      location: data.get('location'),
+      description: data.get('description'),
+    });
+  } finally {
+    saveButton.disabled = false;
+    addDialog.close();
+  }
 
-  saveButton.disabled = false;
-  addDialog.close();
   state.events = await loadEvents();
   renderTodayList();
   selectDate(created.start.slice(0, 10));
@@ -392,6 +402,18 @@ function showUndoToast(e) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(hideToast, UNDO_MS);
 }
+
+function showErrorToast(message) {
+  toast.replaceChildren(textSpan('toast-message', `Error: ${message}`));
+  toast.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, UNDO_MS);
+}
+
+// Any failed request that isn't handled elsewhere ends up here.
+window.addEventListener('unhandledrejection', event => {
+  showErrorToast(event.reason?.message || 'Something went wrong');
+});
 
 function hideToast() {
   clearTimeout(toastTimer);
