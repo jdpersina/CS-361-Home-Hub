@@ -1,35 +1,26 @@
-from flask import Flask, render_template, jsonify, request, abort
-from pathlib import Path
-from datetime import datetime, timedelta, timezone
-import uuid
-from storage import EventStore
+from flask import Flask, render_template, jsonify, request
+from datetime import datetime
+import os
+import requests
 
 app = Flask(__name__)
 
 HUB_TIMEZONE = "America/New_York"
-FAMILY = ["Dan", "Liv", "Leo", "Mia"]
+FAMILY = ["Dan", "Liv", "Leo", "Sarah"]
 UNDO_SECONDS = 5
-PURGE_AFTER_SECONDS = UNDO_SECONDS + 5
-EVENTS_FILE = Path(__file__).parent / "data" / "events.json"
+CALENDAR_SERVICE_URL = os.environ.get("CALENDAR_SERVICE_URL", "http://localhost:8000")
+CALENDAR_ID = os.environ.get("CALENDAR_ID", "persinaj")
+EVENTS_URL = f"{CALENDAR_SERVICE_URL}/calendars/{CALENDAR_ID}/events"
 
-store = EventStore(EVENTS_FILE)
-
-def utc_now():
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-def purge_deleted(events):
-    #Soft-deleted events stay in the file for the undo window, then get dropped the next time anything is saved
-    cutoff = datetime.now(timezone.utc) - timedelta(seconds=PURGE_AFTER_SECONDS)
-    events[:] = [
-        e for e in events
-        if e.get("deletedAt") is None or datetime.fromisoformat(e["deletedAt"]) > cutoff
-    ]
-
-def find_event(events, uid):
-    for e in events:
-        if e["uid"] == uid:
-            return e
-    abort(404)
+def calendar_service(method, url, **kwargs):
+    """
+    Send a request to the Calendar Microservice and return its JSON and status code.
+    """
+    try:
+        response = requests.request(method, url, timeout=5, **kwargs)
+    except requests.RequestException:
+        return {"error": "Calendar service is unavailable"}, 503
+    return response.json(), response.status_code
 
 @app.get("/")
 def index():
@@ -42,19 +33,17 @@ def index():
 
 @app.get("/api/events")
 def list_events():
-    visible = [e for e in store.load() if e.get("deletedAt") is None]
-    visible.sort(key=lambda e: e["start"])
-    return jsonify(visible)
+    events, status = calendar_service("GET", EVENTS_URL)
+    if status == 200:
+        events.sort(key=lambda e: e["start"])
+    return jsonify(events), status
 
 @app.post("/api/events")
 def add_event():
     form = request.get_json()
     start = datetime.fromisoformat(f"{form['date']}T{form['startTime']}")
     end = datetime.fromisoformat(f"{form['date']}T{form['endTime']}")
-    event = {
-        "@type": "calendarEvent",
-        "uid": str(uuid.uuid4()),
-        "updated": utc_now(),
+    event, status = calendar_service("POST", EVENTS_URL, json={
         "title": form["title"].strip(),
         "participants": form["participants"],
         "description": form.get("description", "").strip(),
@@ -62,37 +51,18 @@ def add_event():
         "timeZone": HUB_TIMEZONE,
         "durationMinutes": int((end - start).total_seconds() // 60),
         "location": form.get("location", "").strip(),
-        "status": "confirmed",
-        "deletedAt": None,
-    }
-
-    def add(events):
-        purge_deleted(events)
-        events.append(event)
-
-    store.update(add)
-    return jsonify(event), 201
+    })
+    return jsonify(event), status
 
 @app.delete("/api/events/<uid>")
 def delete_event(uid):
-    def soft_delete(events):
-        purge_deleted(events)
-        event = find_event(events, uid)
-        event["deletedAt"] = event["updated"] = utc_now()
-
-    store.update(soft_delete)
-    return "", 204
+    event, status = calendar_service("DELETE", f"{EVENTS_URL}/{uid}")
+    return jsonify(event), status
 
 @app.post("/api/events/<uid>/restore")
 def restore_event(uid):
-    def restore(events):
-        purge_deleted(events)
-        event = find_event(events, uid)
-        event["deletedAt"] = None
-        event["updated"] = utc_now()
-        return event
-
-    return jsonify(store.update(restore))
+    event, status = calendar_service("POST", f"{EVENTS_URL}/{uid}/restore")
+    return jsonify(event), status
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
