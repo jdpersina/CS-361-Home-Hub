@@ -61,6 +61,74 @@
 
   }
 
+  /* Flight banner, pinned to the bottom of the home view */
+  #view-home {
+    padding-bottom: 96px;
+  }
+  #flight-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 40px;
+    background-color: var(--card);
+    border-top: 1px solid var(--border);
+  }
+  #flight-banner-label {
+    flex: none;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  #flight-ticker {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+  }
+  #flight-list {
+    display: flex;
+    width: max-content;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* The list holds every flight twice, so sliding by half loops seamlessly */
+  #flight-list.scrolling {
+    animation: flight-scroll var(--scroll-duration, 60s) linear infinite;
+  }
+  @keyframes flight-scroll {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #flight-ticker { overflow-x: auto; }
+    #flight-list.scrolling { animation: none; }
+  }
+  .flight {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 0 28px;
+    white-space: nowrap;
+    border-right: 1px solid var(--border);
+  }
+  .flight-callsign {
+    font-weight: 600;
+  }
+  .flight-type, .flight-city, .flight-empty {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .flight-empty {
+    padding: 0 28px;
+  }
+
   /* Calendar view: a full-screen layer over the home view */
   #view-calendar {
     position: fixed;
@@ -345,11 +413,11 @@
     color: var(--muted);
   }
 
-  /* Undo toast, above the calendar layer */
+  /* Undo toast, above the calendar layer and the flight banner */
   #toast {
     position: fixed;
     left: 50%;
-    bottom: 32px;
+    bottom: 88px;
     transform: translateX(-50%);
     z-index: 20;
     display: flex;

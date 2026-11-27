@@ -1,6 +1,8 @@
 const HUB_TIMEZONE = document.body.dataset.hubTimezone;
 const UNDO_MS = Number(document.body.dataset.undoSeconds) * 1000;
 const MAX_CHIPS_PER_DAY = 2;
+const FLIGHT_REFRESH_MS = 30000;
+const FLIGHT_SCROLL_PX_PER_SECOND = 40;
 
 const state = {
   events: [],
@@ -117,6 +119,74 @@ function renderTodayList() {
     li.textContent = `${formatTime(eventTimes(e).start)} - ${e.title}`;
     list.appendChild(li);
   });
+}
+
+// Flight banner
+// Failures show in the banner instead of the error toast, since this polls in the background.
+let shownFlights = '';
+
+async function refreshFlights() {
+  let flights = null;
+  try {
+    ({ flights } = await request('/api/flights/overhead'));
+  } catch {}
+  renderFlights(flights);
+}
+
+function renderFlights(flights) {
+  // Re-rendering restarts the scroll, so skip it when nothing changed.
+  const key = JSON.stringify(flights);
+  if (key === shownFlights) return;
+  shownFlights = key;
+
+  const list = document.getElementById('flight-list');
+  list.classList.remove('scrolling');
+  if (flights === null) {
+    list.replaceChildren(flightMessage('Flight tracker unavailable'));
+    return;
+  }
+  if (flights.length === 0) {
+    list.replaceChildren(flightMessage('No planes in sight right now'));
+    return;
+  }
+
+  const items = flights.map(flightItem);
+  list.replaceChildren(...items);
+  if (list.scrollWidth > document.getElementById('flight-ticker').clientWidth) {
+    const copies = items.map(item => item.cloneNode(true));
+    copies.forEach(copy => copy.setAttribute('aria-hidden', 'true'));
+    list.append(...copies);
+    list.style.setProperty('--scroll-duration', `${list.scrollWidth / 2 / FLIGHT_SCROLL_PX_PER_SECOND}s`);
+    list.classList.add('scrolling');
+  }
+}
+
+function flightItem(f) {
+  const route = document.createElement('span');
+  if (f.origin && f.destination) {
+    route.append(
+      `${f.origin.code} `, textSpan('flight-city', f.origin.city ?? ''),
+      ` → ${f.destination.code} `, textSpan('flight-city', f.destination.city ?? ''),
+    );
+  } else {
+    route.append(textSpan('flight-city', 'Route unknown'));
+  }
+
+  const li = document.createElement('li');
+  li.className = 'flight';
+  li.append(
+    textSpan('flight-callsign', f.callsign),
+    textSpan('flight-type', f.aircraft_type ?? ''),
+    route,
+  );
+  return li;
+}
+
+function flightMessage(text) {
+  const li = document.createElement('li');
+  li.className = 'flight-empty';
+  li.textContent = text;
+  return li;
 }
 
 // Calendar view
@@ -426,6 +496,9 @@ async function start() {
   state.today = todayInHub();
   state.selected = state.today;
   renderDateCard();
+
+  refreshFlights();
+  setInterval(refreshFlights, FLIGHT_REFRESH_MS);
 
   state.events = await loadEvents();
   renderTodayList();
